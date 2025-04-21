@@ -1,48 +1,54 @@
 package com.example.demo;
 
-import com.example.demo.controller.AuthController;
-import com.example.demo.service.UserService;
-import org.junit.jupiter.api.BeforeEach;
+import com.example.demo.model.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 public class DemoApplicationTests {
 
-    @Mock
-    private UserService userService;
-
-    @InjectMocks
-    private AuthController authController;
-
+    @Autowired
     private MockMvc mockMvc;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(authController).build();
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Test
+    public void testSignup() throws Exception {
+        User user = new User();
+        user.setUsername("testuser");
+        user.setEmail("test@example.com");
+        user.setPassword("testpass");
+
+        mockMvc.perform(post("/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk()); // or isCreated()
     }
 
     @Test
-    public void testShowLoginPage() throws Exception {
-        mockMvc.perform(get("/"))
-               .andExpect(status().isOk())
-               .andExpect(view().name("login"));
-    }
+    public void testLogin() throws Exception {
+        // send login details (depends on your login API format)
+        String jsonLogin = """
+            {
+              "email": "test@example.com",
+              "password": "testpass"
+            }
+        """;
 
-    @Test
-    public void testShowSignupPage() throws Exception {
-        mockMvc.perform(get("/signup"))
-               .andExpect(status().isOk())
-               .andExpect(view().name("signup"));
+        mockMvc.perform(post("/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonLogin))
+                .andExpect(status().isOk());
     }
 }
