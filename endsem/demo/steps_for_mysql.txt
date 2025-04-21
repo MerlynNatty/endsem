@@ -1,0 +1,78 @@
+✅ 1. Check if MySQL is Installed on Windows
+Press Windows + R, type cmd, hit Enter.
+
+Run:
+
+bash
+Copy
+Edit
+mysql --version
+If it says 'mysql' is not recognized, you need to install MySQL.
+
+✅ 2. Install MySQL on Windows
+Easiest way:
+
+Go to https://dev.mysql.com/downloads/installer/
+
+Download the MySQL Installer for Windows (prefer the web version).
+
+During setup:
+
+Choose "Server only" or "Developer Default".
+
+Set a root password that you'll remember (important).
+
+Add MySQL to your PATH if prompted.
+
+✅ 3. Start MySQL Server
+Once installed, start the server via any one of the following:
+
+Option A: Using MySQL Notifier (GUI)
+Look for MySQL Notifier in Start Menu.
+
+Right-click and choose: Start MySQL Server.
+
+Option B: Using Services
+Press Windows + R, type services.msc, hit Enter.
+
+Scroll to MySQL.
+
+Right-click → Start.
+
+Option C: Command Line (PowerShell or CMD as Admin)
+bash
+Copy
+Edit
+net start mysql
+(Service name may vary, could be mysql80 or MySQL57 depending on version.)
+
+To check services:
+
+bash
+Copy
+Edit
+sc query | findstr /I "mysql"
+✅ 4. Login to MySQL
+In Command Prompt or PowerShell:
+
+bash
+Copy
+Edit
+mysql -u root -p
+Enter the root password you set during install.
+
+✅ 5. Create a New MySQL User Account
+After login, run:
+
+sql
+Copy
+Edit
+CREATE USER 'your_username'@'localhost' IDENTIFIED BY 'your_password';
+GRANT ALL PRIVILEGES ON *.* TO 'your_username'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+Now you can log in using:
+
+bash
+Copy
+Edit
+mysql -u your_username -p

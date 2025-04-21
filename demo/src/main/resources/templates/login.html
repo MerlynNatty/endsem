@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | Book Exchange</title>
+</head>
+<body>
+    <h2>Login to Book Exchange</h2>
+    <form action="/login" method="post">
+        <input type="email" name="email" placeholder="Email" required /><br>
+        <input type="password" name="password" placeholder="Password" required /><br>
+        <button type="submit">Login</button>
+    </form>
+
+    <p>Don't have an account? <a href="/signup">Signup</a></p>
+
+    <!-- Error message if login fails -->
+    <div th:if="${param.error}">
+        <p style="color:red;">Invalid email or password</p>
+    </div>
+
+    <!-- Logout success message -->
+    <div th:if="${param.logout}">
+        <p style="color:green;">Logged out successfully</p>
+    </div>
+</body>
+</html>

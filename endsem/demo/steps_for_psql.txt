@@ -1,0 +1,52 @@
+✅ Step-by-Step Installation Guide
+1. Download PostgreSQL Installer
+    -Go to the official website: https://www.postgresql.org/download/windows/
+    -Click "Download the installer" which will redirect you to EnterpriseDB.
+
+2. Run the Installer
+    -Double-click the downloaded .exe file.
+    -Cick Next to start the setup.
+
+3. Choose Components
+    -Default components like:
+    -PostgreSQL Server
+    -pgAdmin (GUI tool)
+    -StackBuilder (optional tool for add-ons)
+    -Command Line Tools
+    -Keep them checked and click Next.
+
+4. Choose Installation Directory
+    -Default is: C:\Program Files\PostgreSQL\xx
+    -Click Next.
+
+5. Set Password for Superuser (postgres)
+    -Enter and confirm a strong password. Remember this, it’s needed to log in later.
+
+6. Port Configuration
+    -Default port is 5432.
+    -Keep it unless you have a reason to change it.
+
+7. Locale Settings
+    -Leave it to default or choose your region.
+
+8. Start Installation
+    -Review everything and click Next → Next → Finish.
+
+🔍 Verify Installation
+    -Open pgAdmin (installed along with PostgreSQL)
+
+    Connect using:
+        -Username: postgres
+        -Password: (the one you set during installation)
+
+OR
+
+    Open Command Prompt and run:
+        -psql -U postgres
+    (It will prompt for the password)
+
+-Command to create db
+CREATE ROLE user3 WITH LOGIN PASSWORD 'password';
+ALTER ROLE user3 CREATEDB;
+CREATE DATABASE exchange OWNER user3;
+\q
